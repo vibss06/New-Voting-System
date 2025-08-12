@@ -7,16 +7,16 @@
 
 /* Body styling */
 body {
-  font-family: "Segoe UI", Arial, sans-serif;
-  background-color: #f4f6f8;
-  color: #222;
-  line-height: 1.6;
+  font-family: "Segoe UI", Roboto, sans-serif;
+  background: linear-gradient(135deg, #f0f4f8, #dfe9f3);
+  color: #333;
+  line-height: 1.5;
   padding: 20px;
 }
 
 /* Main container */
 .wrap {
-  max-width: 1100px;
+  max-width: 1000px;
   margin: auto;
 }
 
@@ -26,9 +26,8 @@ header {
   margin-bottom: 30px;
 }
 header h1 {
-  font-size: 2rem;
-  color: #1a1a1a;
-  font-weight: 600;
+  font-size: 2.2rem;
+  color: #2c3e50;
 }
 header .lead {
   font-size: 1rem;
@@ -49,70 +48,71 @@ header .lead {
 
 /* Card styling */
 .card {
-  background: #fff;
+  background: #ffffffcc;
+  backdrop-filter: blur(6px);
   padding: 20px;
-  border-radius: 6px;
-  border: 1px solid #ddd;
+  border-radius: 14px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
 }
 
-/* Candidate container */
+/* Candidate cards */
 .candidate {
-  background: #fafafa;
+  background: #f9fbfc;
   padding: 15px;
-  border-radius: 5px;
-  border: 1px solid #e0e0e0;
-  margin-bottom: 12px;
-  transition: background 0.2s ease;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  transition: all 0.3s ease;
 }
 .candidate:hover {
-  background: #f0f0f0;
+  background: #eef3f7;
+  transform: translateY(-2px);
 }
 
 /* Candidate name */
 .candidate h4 {
-  margin-bottom: 5px;
-  color: #2a2a2a;
-  font-weight: 600;
+  margin-bottom: 6px;
+  color: #1e3d59;
 }
 
 /* Candidate description */
 .candidate p {
   margin-bottom: 10px;
-  font-size: 0.9rem;
   color: #555;
+  font-size: 0.9rem;
 }
 
 /* Buttons */
 .btn {
-  background: #0056b3;
+  background: #1e88e5;
   color: white;
   border: none;
-  padding: 8px 14px;
-  border-radius: 4px;
+  padding: 10px 16px;
+  border-radius: 8px;
   cursor: pointer;
-  font-size: 0.9rem;
-  transition: background 0.3s ease;
+  font-size: 0.95rem;
+  transition: background 0.3s ease, transform 0.1s ease;
 }
 .btn:hover {
-  background: #003d80;
+  background: #1565c0;
+  transform: translateY(-1px);
 }
 .btn-ghost {
   background: transparent;
-  border: 1px solid #0056b3;
-  color: #0056b3;
+  border: 2px solid #1e88e5;
+  color: #1e88e5;
 }
 .btn-ghost:hover {
-  background: #0056b3;
+  background: #1e88e5;
   color: white;
 }
 
-/* Results section */
+/* Results styling */
 .results {
-  font-size: 0.95rem;
+  font-size: 1rem;
   margin-bottom: 10px;
 }
 .results div {
-  margin-bottom: 5px;
+  margin-bottom: 6px;
 }
 
 /* Small text */
@@ -120,4 +120,5 @@ header .lead {
   font-size: 0.85rem;
   color: #777;
 }
+
 
