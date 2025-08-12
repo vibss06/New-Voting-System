@@ -1,8 +1,8 @@
 // Your default candidate list (edit here and push to GitHub to update site)
 const candidates = [
-    { id: 1, name: "Alice" },
-    { id: 2, name: "Bob" },
-    { id: 3, name: "Charlie" }
+    { id: 1, name: "Vibhanshu" },
+    { id: 2, name: "Sharayu" },
+    { id: 3, name: "XYZ" }
 ];
 
 // Load votes from localStorage, but not candidate names
