@@ -1,33 +1,45 @@
-// Your default candidate list (edit here and push to GitHub to update site)
+// === Candidate List ===
+// Edit this list to change candidate names & descriptions.
+// Push changes to GitHub — the site updates instantly.
+// 'id' must be unique for each candidate.
+// 'name' is the display name.
+// 'desc' is a short description about the candidate.
+
 const candidates = [
-    { id: 1, name: "Vibhanshu" },
-    { id: 2, name: "Sharayu" },
-    { id: 3, name: "XYZ" }
+    { id: 1, name: "Alice Johnson", desc: "Passionate about community development and youth programs." },
+    { id: 2, name: "Bob Smith", desc: "Advocates for clean energy and better public transport." },
+    { id: 3, name: "Charlie Lee", desc: "Focused on education reform and digital literacy." }
 ];
 
-// Load votes from localStorage, but not candidate names
+// Load votes from localStorage (only votes, not names)
 let votes = JSON.parse(localStorage.getItem("votes")) || {};
 
-// Function to save votes
+// Save votes to localStorage
 function saveVotes() {
     localStorage.setItem("votes", JSON.stringify(votes));
 }
 
-// Render candidates
+// Render candidates with description
 function renderCandidates() {
     const container = document.getElementById("candidates-list");
     container.innerHTML = "";
     candidates.forEach(c => {
-        const btn = document.createElement("button");
-        btn.textContent = `Vote for ${c.name}`;
-        btn.className = "btn";
-        btn.onclick = () => {
-            votes[c.id] = (votes[c.id] || 0) + 1;
-            saveVotes();
-            renderResults();
-        };
-        container.appendChild(btn);
+        const card = document.createElement("div");
+        card.className = "candidate-card";
+        card.innerHTML = `
+            <h3>${c.name}</h3>
+            <p class="candidate-desc">${c.desc}</p>
+            <button class="btn" onclick="vote(${c.id})">Vote for ${c.name}</button>
+        `;
+        container.appendChild(card);
     });
+}
+
+// Vote function
+function vote(id) {
+    votes[id] = (votes[id] || 0) + 1;
+    saveVotes();
+    renderResults();
 }
 
 // Render results
@@ -38,7 +50,7 @@ function renderResults() {
     candidates.forEach(c => {
         const count = votes[c.id] || 0;
         total += count;
-        results.innerHTML += `<div>${c.name}: ${count}</div>`;
+        results.innerHTML += `<div><strong>${c.name}</strong>: ${count} votes</div>`;
     });
     document.getElementById("total-votes").textContent = total;
 }
@@ -50,6 +62,35 @@ document.getElementById("clear-votes").onclick = () => {
     renderResults();
 };
 
-// Init
+// Export votes
+document.getElementById("export-data").onclick = () => {
+    const blob = new Blob([JSON.stringify(votes)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "votes.json";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+};
+
+// Import votes
+document.getElementById("import-data").onclick = () => {
+    document.getElementById("import-file").click();
+};
+
+document.getElementById("import-file").onchange = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+        votes = JSON.parse(reader.result);
+        saveVotes();
+        renderResults();
+    };
+    reader.readAsText(file);
+};
+
+// Initialize
 renderCandidates();
 renderResults();
