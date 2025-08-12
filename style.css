@@ -1,45 +1,177 @@
+:root {
+  --bg: #0f172a;
+  --card-bg: #1e293b;
+  --accent: #3b82f6;
+  --muted: #94a3b8;
+  --text: #f1f5f9;
+  --bar: #60a5fa;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Segoe UI", sans-serif;
+  margin: 0;
+}
+
+.wrap {
+  max-width: 1100px;
+  margin: auto;
+  padding: 20px;
+}
+
+header .brand h1 {
+  margin-bottom: 5px;
+}
+
+.lead {
+  color: var(--muted);
+}
+
+.grid {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: 2fr 1fr;
+  margin-top: 20px;
+}
+
+.card {
+  background: var(--card-bg);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+
+.candidate {
+  display: flex;
+  align-items: center;
+  background: rgba(255,255,255,0.02);
+  border-radius: 10px;
+  padding: 12px;
+  margin-bottom: 10px;
+  transition: background 0.2s;
+}
+
+.candidate:hover {
+  background: rgba(255,255,255,0.05);
+}
+
+.cand-thumb {
+  background: var(--accent);
+  color: #fff;
+  font-weight: bold;
+  font-size: 18px;
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 12px;
+}
+
+.cand-meta {
+  flex: 1;
+}
+
+.cand-name {
+  font-weight: bold;
+  margin: 0 0 4px;
+}
+
+.cand-desc {
+  font-size: 13px;
+  color: var(--muted);
+  margin: 0;
+}
+
+.button-group {
+  display: flex;
+  gap: 8px;
+  margin-top: 15px;
+}
+
+/* Buttons */
 .btn {
-  padding: 10px 16px;
+  padding: 8px 14px;
   border-radius: 8px;
   font-weight: 600;
   border: 0;
   cursor: pointer;
   transition: all 0.25s ease;
   font-size: 14px;
-  letter-spacing: 0.3px;
 }
 
-/* Primary button */
 .btn-primary {
-  background: linear-gradient(90deg, var(--accent), #06b6d4);
-  color: #031124;
-  box-shadow: 0 4px 10px rgba(124, 58, 237, 0.4);
+  background: var(--accent);
+  color: white;
 }
 
 .btn-primary:hover {
-  filter: brightness(1.1);
+  background: #2563eb;
   transform: translateY(-2px);
-  box-shadow: 0 6px 14px rgba(124, 58, 237, 0.5);
 }
 
-.btn-primary:active {
-  transform: scale(0.96);
-  box-shadow: 0 2px 6px rgba(124, 58, 237, 0.3);
-}
-
-/* Ghost button */
 .btn-ghost {
   background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--muted);
   color: var(--muted);
 }
 
 .btn-ghost:hover {
-  background: rgba(255, 255, 255, 0.04);
-  color: #ffffff;
-  transform: translateY(-1px);
+  background: rgba(255, 255, 255, 0.05);
+  color: white;
 }
 
-.btn-ghost:active {
-  transform: scale(0.97);
+/* Results bars */
+.bar {
+  background: rgba(255,255,255,0.1);
+  border-radius: 4px;
+  height: 8px;
+  overflow: hidden;
 }
+
+.bar-inner {
+  background: var(--bar);
+  height: 100%;
+  transition: width 0.3s;
+}
+
+.results > div {
+  margin-bottom: 12px;
+}
+
+.small {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.total {
+  margin-top: 12px;
+}
+
+.warning {
+  margin-top: 10px;
+  font-style: italic;
+}
+
+/* Toast */
+.toast {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 28px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: rgba(2,6,23,0.85);
+  box-shadow: 0 6px 20px rgba(2,6,23,0.6);
+  animation: fadeInOut 1.5s ease forwards;
+}
+
+@keyframes fadeInOut {
+  0% { opacity: 0; transform: translate(-50%, 10px); }
+  10% { opacity: 1; transform: translate(-50%, 0); }
+  90% { opacity: 1; transform: translate(-50%, 0); }
+  100% { opacity: 0; transform: translate(-50%, 10px); }
+}
+
