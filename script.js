@@ -1,5 +1,6 @@
 // === Candidate List ===
-// Change names & descriptions here. Save & push to GitHub for instant update.
+// Edit this list to update names & descriptions.
+// When you push changes to GitHub, your site updates automatically.
 
 const candidates = [
     { id: 1, name: "Alice Johnson", desc: "Passionate about community development and youth programs." },
@@ -7,86 +8,78 @@ const candidates = [
     { id: 3, name: "Charlie Lee", desc: "Focused on education reform and digital literacy." }
 ];
 
-// Load votes
-let votes = JSON.parse(localStorage.getItem("votes")) || {};
+// === Voting Logic ===
+let votes = JSON.parse(localStorage.getItem('votes')) || {};
 
 function saveVotes() {
-    localStorage.setItem("votes", JSON.stringify(votes));
+    localStorage.setItem('votes', JSON.stringify(votes));
+    renderResults();
 }
 
-// Render candidate list
+function vote(candidateId) {
+    votes[candidateId] = (votes[candidateId] || 0) + 1;
+    saveVotes();
+}
+
 function renderCandidates() {
-    const container = document.getElementById("candidates-list");
-    container.innerHTML = "";
+    const list = document.getElementById('candidates-list');
+    list.innerHTML = '';
     candidates.forEach(c => {
-        const card = document.createElement("div");
-        card.className = "candidate-card";
+        const card = document.createElement('div');
+        card.className = 'candidate-card';
         card.innerHTML = `
-            <h3>${c.name}</h3>
-            <p class="candidate-desc">${c.desc}</p>
+            <div class="candidate-name">${c.name}</div>
+            <div class="candidate-desc">${c.desc}</div>
             <button class="btn" onclick="vote(${c.id})">Vote for ${c.name}</button>
         `;
-        container.appendChild(card);
+        list.appendChild(card);
     });
 }
 
-// Voting logic
-function vote(id) {
-    votes[id] = (votes[id] || 0) + 1;
-    saveVotes();
-    renderResults();
-}
-
-// Render results
 function renderResults() {
-    const results = document.getElementById("results");
-    results.innerHTML = "";
+    const resultsDiv = document.getElementById('results');
     let total = 0;
-    candidates.forEach(c => {
+    resultsDiv.innerHTML = candidates.map(c => {
         const count = votes[c.id] || 0;
         total += count;
-        results.innerHTML += `<div><strong>${c.name}</strong>: ${count} votes</div>`;
-    });
-    document.getElementById("total-votes").textContent = total;
+        return `<div>${c.name}: ${count} votes</div>`;
+    }).join('');
+    document.getElementById('total-votes').textContent = total;
 }
 
-// Clear votes
-document.getElementById("clear-votes").onclick = () => {
+// === Export / Import / Clear ===
+document.getElementById('clear-votes').onclick = () => {
     votes = {};
     saveVotes();
-    renderResults();
 };
 
-// Export votes
-document.getElementById("export-data").onclick = () => {
-    const blob = new Blob([JSON.stringify(votes)], { type: "application/json" });
+document.getElementById('export-data').onclick = () => {
+    const data = JSON.stringify(votes, null, 2);
+    const blob = new Blob([data], {type: 'application/json'});
     const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
+    const a = document.createElement('a');
     a.href = url;
-    a.download = "votes.json";
-    document.body.appendChild(a);
+    a.download = 'votes.json';
     a.click();
-    document.body.removeChild(a);
 };
 
-// Import votes
-document.getElementById("import-data").onclick = () => {
-    document.getElementById("import-file").click();
+document.getElementById('import-data').onclick = () => {
+    document.getElementById('import-file').click();
 };
 
-document.getElementById("import-file").onchange = (e) => {
+document.getElementById('import-file').onchange = e => {
     const file = e.target.files[0];
     if (!file) return;
     const reader = new FileReader();
     reader.onload = () => {
         votes = JSON.parse(reader.result);
         saveVotes();
-        renderResults();
     };
     reader.readAsText(file);
 };
 
-// Initialize
+// === Init ===
 renderCandidates();
 renderResults();
+
 
