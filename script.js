@@ -1,7 +1,7 @@
 const candidates = [
-  { id: 'c1', name: 'Abhay Kumar', description: 'Focus on education & community programs' },
-  { id: 'c2', name: 'Sharayu Singh', description: 'Tech-forward, infrastructure & jobs' },
-  { id: 'c3', name: 'Vibhanshu  Patel', description: 'Environment, healthcare, transparency' }
+  { id: 'c1', name: 'Abhay Kumar', description: 'Backchod' },
+  { id: 'c2', name: 'Sharayu Singh', description: 'Maha Backchod' },
+  { id: 'c3', name: 'Vibhanshu Patel', description: 'Good Human' }
 ];
 
 const STORAGE_KEY = 'voting_demo_votes_v2';
