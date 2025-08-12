@@ -146,6 +146,3 @@ importFile.addEventListener('change', async (ev) => {
 
 renderCandidates();
 renderResults();
-
-// Initial render
-renderCandidates(); renderResults();
