@@ -3,36 +3,38 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Online Voting — Demo (Frontend Only)</title>
+  <title>Online Voting — Styled Demo</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <main class="wrap">
     <header>
       <div class="brand">
-        <h1>Online Voting — Demo</h1>
-        <p class="lead">Frontend-only prototype. Votes are saved in your browser (localStorage).</p>
+        <h1>🗳 Online Voting — Demo</h1>
+        <p class="lead">Votes are saved in your browser (localStorage). This is just a demo UI.</p>
       </div>
     </header>
 
     <div class="grid">
+      <!-- Voting Section -->
       <section class="card" id="voting-area">
-        <h2 style="margin-top:0">Cast your vote</h2>
+        <h2>Cast your vote</h2>
         <div id="candidates-list"></div>
 
-        <div style="margin-top:12px;display:flex;gap:8px;align-items:center">
-          <button id="clear-votes" class="btn btn-ghost">Clear votes (local)</button>
+        <div class="button-group">
+          <button id="clear-votes" class="btn btn-ghost">Clear votes</button>
           <button id="export-data" class="btn btn-ghost">Export data</button>
           <button id="import-data" class="btn btn-ghost">Import data</button>
           <input id="import-file" type="file" accept="application/json" style="display:none" />
         </div>
       </section>
 
+      <!-- Results Section -->
       <aside class="card">
-        <h3 style="margin-top:0">Results</h3>
+        <h3>Results</h3>
         <div id="results" class="results" aria-live="polite"></div>
-        <div class="small" style="margin-top:12px">Total votes: <span id="total-votes">0</span></div>
-        <footer class="small">This demo does <strong>not</strong> prevent multiple voting — it's for UI/demo only.</footer>
+        <div class="small total">Total votes: <span id="total-votes">0</span></div>
+        <footer class="small warning">⚠ This demo allows multiple votes (no backend).</footer>
       </aside>
     </div>
   </main>
