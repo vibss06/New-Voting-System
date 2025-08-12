@@ -1,124 +1,125 @@
-/* Reset defaults */
-* {
+/* General Page Styling */
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(120deg, #ff6a00, #ee0979);
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
+  color: #fff;
 }
 
-/* Body styling */
-body {
-  font-family: "Segoe UI", Roboto, sans-serif;
-  background: linear-gradient(135deg, #f0f4f8, #dfe9f3);
-  color: #333;
-  line-height: 1.5;
-  padding: 20px;
-}
-
-/* Main container */
+/* Layout Wrapper */
 .wrap {
   max-width: 1000px;
   margin: auto;
+  padding: 20px;
 }
 
 /* Header */
-header {
-  text-align: center;
-  margin-bottom: 30px;
-}
-header h1 {
-  font-size: 2.2rem;
-  color: #2c3e50;
-}
-header .lead {
-  font-size: 1rem;
-  color: #555;
+header .brand h1 {
+  margin: 0;
+  font-size: 2.4rem;
+  font-weight: bold;
+  text-shadow: 0 0 10px rgba(255,255,255,0.5);
 }
 
-/* Grid layout */
+.lead {
+  color: #ffe4e4;
+  font-size: 1rem;
+}
+
+/* Grid Layout */
 .grid {
   display: grid;
   grid-template-columns: 2fr 1fr;
   gap: 20px;
-}
-@media (max-width: 768px) {
-  .grid {
-    grid-template-columns: 1fr;
-  }
+  margin-top: 20px;
 }
 
-/* Card styling */
+/* Card Styling */
 .card {
-  background: #ffffffcc;
-  backdrop-filter: blur(6px);
+  background: rgba(255, 255, 255, 0.1);
   padding: 20px;
   border-radius: 14px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+  box-shadow: 0 0 15px rgba(255,255,255,0.15);
+  backdrop-filter: blur(8px);
+  transition: transform 0.3s, box-shadow 0.3s;
 }
 
-/* Candidate cards */
-.candidate {
-  background: #f9fbfc;
-  padding: 15px;
-  border-radius: 10px;
-  margin-bottom: 15px;
-  transition: all 0.3s ease;
-}
-.candidate:hover {
-  background: #eef3f7;
-  transform: translateY(-2px);
-}
-
-/* Candidate name */
-.candidate h4 {
-  margin-bottom: 6px;
-  color: #1e3d59;
-}
-
-/* Candidate description */
-.candidate p {
-  margin-bottom: 10px;
-  color: #555;
-  font-size: 0.9rem;
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 0 25px rgba(255,255,255,0.25);
 }
 
 /* Buttons */
 .btn {
-  background: #1e88e5;
-  color: white;
-  border: none;
   padding: 10px 16px;
+  border: none;
   border-radius: 8px;
   cursor: pointer;
+  background: linear-gradient(45deg, #ff6a00, #ffcc00);
+  color: white;
+  font-weight: bold;
   font-size: 0.95rem;
-  transition: background 0.3s ease, transform 0.1s ease;
+  transition: transform 0.2s, box-shadow 0.2s;
 }
+
 .btn:hover {
-  background: #1565c0;
-  transform: translateY(-1px);
+  transform: scale(1.05);
+  box-shadow: 0 0 15px rgba(255,255,255,0.3);
 }
+
+/* Ghost Buttons */
 .btn-ghost {
   background: transparent;
-  border: 2px solid #1e88e5;
-  color: #1e88e5;
+  border: 1px solid #fff;
+  color: #fff;
 }
+
 .btn-ghost:hover {
-  background: #1e88e5;
-  color: white;
+  background: rgba(255, 255, 255, 0.15);
 }
 
-/* Results styling */
+/* Candidate Cards */
+.candidate-card {
+  background: rgba(255, 255, 255, 0.15);
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 12px;
+  box-shadow: 0 0 10px rgba(255,255,255,0.15);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.candidate-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0 20px rgba(255,255,255,0.3);
+}
+
+.candidate-name {
+  font-size: 1.3em;
+  font-weight: bold;
+}
+
+.candidate-desc {
+  color: #ffe4e4;
+  margin: 6px 0;
+}
+
+/* Button Row */
+.btn-row {
+  margin-top: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* Results Section */
 .results {
-  font-size: 1rem;
-  margin-bottom: 10px;
-}
-.results div {
-  margin-bottom: 6px;
+  line-height: 1.6;
+  color: #fff8f8;
 }
 
-/* Small text */
 .small {
-  font-size: 0.85rem;
-  color: #777;
+  font-size: 0.9em;
+  color: #ffd9d9;
 }
-
 
