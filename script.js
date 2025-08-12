@@ -1,9 +1,5 @@
 // === Candidate List ===
-// Edit this list to change candidate names & descriptions.
-// Push changes to GitHub — the site updates instantly.
-// 'id' must be unique for each candidate.
-// 'name' is the display name.
-// 'desc' is a short description about the candidate.
+// Change names & descriptions here. Save & push to GitHub for instant update.
 
 const candidates = [
     { id: 1, name: "Alice Johnson", desc: "Passionate about community development and youth programs." },
@@ -11,15 +7,14 @@ const candidates = [
     { id: 3, name: "Charlie Lee", desc: "Focused on education reform and digital literacy." }
 ];
 
-// Load votes from localStorage (only votes, not names)
+// Load votes
 let votes = JSON.parse(localStorage.getItem("votes")) || {};
 
-// Save votes to localStorage
 function saveVotes() {
     localStorage.setItem("votes", JSON.stringify(votes));
 }
 
-// Render candidates with description
+// Render candidate list
 function renderCandidates() {
     const container = document.getElementById("candidates-list");
     container.innerHTML = "";
@@ -35,7 +30,7 @@ function renderCandidates() {
     });
 }
 
-// Vote function
+// Voting logic
 function vote(id) {
     votes[id] = (votes[id] || 0) + 1;
     saveVotes();
@@ -94,3 +89,4 @@ document.getElementById("import-file").onchange = (e) => {
 // Initialize
 renderCandidates();
 renderResults();
+
