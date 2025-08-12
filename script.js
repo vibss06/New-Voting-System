@@ -1,7 +1,7 @@
 const candidates = [
-  { id: 'c1', name: 'Alice Kumar', description: 'Focus on education & community programs' },
-  { id: 'c2', name: 'Rahul Singh', description: 'Tech-forward, infrastructure & jobs' },
-  { id: 'c3', name: 'Neha Patel', description: 'Environment, healthcare, transparency' }
+  { id: 'c1', name: 'Abhay Kumar', description: 'Focus on education & community programs' },
+  { id: 'c2', name: 'Sharayu Singh', description: 'Tech-forward, infrastructure & jobs' },
+  { id: 'c3', name: 'Vibhanshu  Patel', description: 'Environment, healthcare, transparency' }
 ];
 
 const STORAGE_KEY = 'voting_demo_votes_v2';
