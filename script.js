@@ -3,8 +3,8 @@
 // When you push changes to GitHub, your site updates automatically.
 
 const candidates = [
-    { id: 1, name: "Alice Johnson", desc: "Passionate about community development and youth programs." },
-    { id: 2, name: "Bob Smith", desc: "Advocates for clean energy and better public transport." },
+    { id: 1, name: "Vibhanshu", desc: "Passionate about community development and youth programs." },
+    { id: 2, name: "Sharayu", desc: "Advocates for clean energy and better public transport." },
     { id: 3, name: "Charlie Lee", desc: "Focused on education reform and digital literacy." }
 ];
 
