@@ -1,40 +1,10 @@
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Online Voting — Demo (Frontend Only)</title>
-  <style>
-    :root{--bg:#0f1724;--card:#0b1220;--accent:#7c3aed;--muted:#94a3b8;--glass: rgba(255,255,255,0.03)}
-    *{box-sizing:border-box;font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial}
-    body{margin:0;background:linear-gradient(180deg,#071024 0%, #07162a 60%);color:#e6eef8;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:28px}
-    .wrap{width:100%;max-width:900px}
-    header{display:flex;align-items:flex-start;gap:16px;margin-bottom:18px}
-    .brand{display:flex;flex-direction:column}
-    h1{margin:0;font-size:22px}
-    p.lead{margin:6px 0 0;color:var(--muted);font-size:14px}
-
-    .grid{display:grid;grid-template-columns:1fr 360px;gap:20px}
-    .card{background:var(--card);padding:18px;border-radius:12px;box-shadow:0 6px 20px rgba(2,6,23,0.6);backdrop-filter:blur(6px)}
-
-    .candidate{display:flex;align-items:center;gap:12px;padding:12px;border-radius:10px;background:linear-gradient(180deg,transparent,rgba(255,255,255,0.01));margin-bottom:10px}
-    .cand-thumb{width:56px;height:56px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#0ea5e9);display:flex;align-items:center;justify-content:center;font-weight:700;color:white}
-    .cand-meta{flex:1}
-    .cand-name{font-weight:600;margin:0}
-    .cand-desc{margin:4px 0 0;color:var(--muted);font-size:13px}
-
-    .btn{padding:8px 12px;border-radius:8px;font-weight:600;border:0;cursor:pointer}
-    .btn-primary{background:linear-gradient(90deg,var(--accent),#06b6d4);color:#031124}
-    .btn-ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted)}
-
-    .results{display:flex;flex-direction:column;gap:10px}
-    .bar{height:14px;background:var(--glass);border-radius:999px;overflow:hidden}
-    .bar-inner{height:100%;border-radius:999px;background:linear-gradient(90deg,var(--accent),#06b6d4);}
-
-    .small{font-size:13px;color:var(--muted)}
-    footer.small{margin-top:10px;color:var(--muted);text-align:center}
-
-    @media (max-width:820px){.grid{grid-template-columns:1fr;}.card{padding:14px}}
-  </style>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <main class="wrap">
@@ -56,7 +26,6 @@
           <button id="import-data" class="btn btn-ghost">Import data</button>
           <input id="import-file" type="file" accept="application/json" style="display:none" />
         </div>
-
       </section>
 
       <aside class="card">
@@ -68,134 +37,6 @@
     </div>
   </main>
 
-  <script>
-    // ===== CONFIG: edit candidate list here =====
-    const candidates = [
-      { id: 'c1', name: 'Alice Kumar', description: 'Focus on education & community programs' },
-      { id: 'c2', name: 'Rahul Singh', description: 'Tech-forward, infrastructure & jobs' },
-      { id: 'c3', name: 'Neha Patel', description: 'Environment, healthcare, transparency' }
-    ];
-    // ============================================
-
-    // Storage key
-    const STORAGE_KEY = 'voting_demo_votes_v1';
-
-    // load votes from localStorage
-    function loadVotes(){
-      try{const raw = localStorage.getItem(STORAGE_KEY); return raw ? JSON.parse(raw) : {} }catch(e){console.error(e);return {}}}
-    function saveVotes(data){ localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); }
-
-    // initialize UI
-    const listEl = document.getElementById('candidates-list');
-    const resultsEl = document.getElementById('results');
-    const totalVotesEl = document.getElementById('total-votes');
-
-    function renderCandidates(){
-      const votes = loadVotes();
-      listEl.innerHTML = '';
-      candidates.forEach(c => {
-        const count = votes[c.id] || 0;
-        const item = document.createElement('div'); item.className = 'candidate';
-
-        const thumb = document.createElement('div'); thumb.className = 'cand-thumb';
-        thumb.textContent = c.name.split(' ').map(s=>s[0]).slice(0,2).join('');
-
-        const meta = document.createElement('div'); meta.className = 'cand-meta';
-        const name = document.createElement('p'); name.className = 'cand-name'; name.textContent = c.name;
-        const desc = document.createElement('p'); desc.className = 'cand-desc'; desc.textContent = c.description;
-
-        meta.appendChild(name); meta.appendChild(desc);
-
-        const action = document.createElement('div');
-        const btn = document.createElement('button'); btn.className = 'btn btn-primary'; btn.textContent = 'Vote';
-        btn.onclick = ()=>{ castVote(c.id); };
-
-        const badge = document.createElement('div'); badge.style.marginLeft='12px'; badge.style.fontSize='13px'; badge.style.color='var(--muted)'; badge.textContent = `${count} votes`;
-
-        action.appendChild(btn); action.appendChild(badge);
-
-        item.appendChild(thumb); item.appendChild(meta); item.appendChild(action);
-        listEl.appendChild(item);
-      });
-    }
-
-    function castVote(candidateId){
-      const votes = loadVotes();
-      votes[candidateId] = (votes[candidateId] || 0) + 1;
-      saveVotes(votes);
-      renderCandidates(); renderResults();
-      // tiny confirmation
-      toast('Vote counted — thank you!');
-    }
-
-    function renderResults(){
-      const votes = loadVotes();
-      const total = Object.values(votes).reduce((a,b)=>a+(b||0),0);
-      resultsEl.innerHTML = '';
-      totalVotesEl.textContent = total;
-
-      // Ensure every candidate appears
-      candidates.forEach(c=>{
-        const count = votes[c.id]||0;
-        const wrapper = document.createElement('div');
-        wrapper.style.display='flex'; wrapper.style.flexDirection='column';
-
-        const top = document.createElement('div'); top.style.display='flex'; top.style.justifyContent='space-between'; top.style.marginBottom='6px';
-        const label = document.createElement('div'); label.textContent = c.name;
-        const pct = document.createElement('div'); pct.textContent = total>0 ? Math.round(count/total*100)+'%' : '0%'; pct.className='small';
-        top.appendChild(label); top.appendChild(pct);
-
-        const bar = document.createElement('div'); bar.className='bar';
-        const inner = document.createElement('div'); inner.className='bar-inner';
-        const width = total > 0 ? (count/total*100) : 0; inner.style.width = width + '%';
-        bar.appendChild(inner);
-
-        wrapper.appendChild(top); wrapper.appendChild(bar);
-        resultsEl.appendChild(wrapper);
-      });
-    }
-
-    // Small toast message
-    function toast(text){
-      const t = document.createElement('div'); t.textContent = text; t.style.position='fixed'; t.style.left='50%'; t.style.transform='translateX(-50%)'; t.style.bottom='28px'; t.style.padding='10px 14px'; t.style.borderRadius='10px'; t.style.background='rgba(2,6,23,0.85)'; t.style.boxShadow='0 6px 20px rgba(2,6,23,0.6)';
-      document.body.appendChild(t);
-      setTimeout(()=>{ t.style.transition='all 300ms'; t.style.opacity='0'; t.style.transform='translateX(-50%) translateY(6px)'; }, 1200);
-      setTimeout(()=>t.remove(),1500);
-    }
-
-    // Clear votes button
-    document.getElementById('clear-votes').addEventListener('click', ()=>{
-      if(!confirm('Clear all saved votes in this browser? This cannot be undone.')) return;
-      localStorage.removeItem(STORAGE_KEY);
-      renderCandidates(); renderResults();
-    });
-
-    // Export as JSON
-    document.getElementById('export-data').addEventListener('click', ()=>{
-      const data = loadVotes();
-      const blob = new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a'); a.href = url; a.download = 'votes.json'; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
-    });
-
-    // Import
-    const importFile = document.getElementById('import-file');
-    document.getElementById('import-data').addEventListener('click', ()=> importFile.click());
-    importFile.addEventListener('change', async (ev)=>{
-      const f = ev.target.files[0]; if(!f) return;
-      try{
-        const txt = await f.text(); const parsed = JSON.parse(txt);
-        if(confirm('Replace current voting data with imported data?')){
-          saveVotes(parsed); renderCandidates(); renderResults();
-          toast('Imported votes');
-        }
-      }catch(e){ alert('Invalid file'); }
-      importFile.value='';
-    });
-
-    // Bootstrap initial render
-    renderCandidates(); renderResults();
-
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
