@@ -3,9 +3,9 @@
 // When you push changes to GitHub, your site updates automatically.
 
 const candidates = [
-    { id: 1, name: "Vibhanshu", desc: "Passionate about community development and youth programs." },
-    { id: 2, name: "Sharayu", desc: "Advocates for clean energy and better public transport." },
-    { id: 3, name: "Charlie Lee", desc: "Focused on education reform and digital literacy." }
+    { id: 1, name: "Vibhanshu", desc: "2nd year Student of DS-A-39" },
+    { id: 2, name: "Sharayu", desc: "2nd year Student of DS-A-38" },
+    { id: 3, name: "XYZ", desc: "Not a group member" }
 ];
 
 // === Voting Logic ===
