@@ -1,117 +1,64 @@
-const candidates = [
-  { id: 1, name: "Candidate A", votes: 0 },
-  { id: 2, name: "Candidate B", votes: 0 },
-  { id: 3, name: "Candidate C", votes: 0 }
-];
+document.addEventListener("DOMContentLoaded", () => {
+  const candidates = ["Candidate A", "Candidate B", "Candidate C"];
+  const candidatesList = document.getElementById("candidates-list");
+  const resultsDiv = document.getElementById("results");
+  const totalVotesSpan = document.getElementById("total-votes");
 
-let selectedCandidate = null;
+  const modal = document.getElementById("voteModal");
+  const modalText = document.getElementById("modalText");
+  const confirmVoteBtn = document.getElementById("confirmVote");
+  const cancelVoteBtn = document.getElementById("cancelVote");
 
-const candidatesList = document.getElementById("candidates-list");
-const results = document.getElementById("results");
-const totalVotesSpan = document.getElementById("total-votes");
-const modal = document.getElementById("voteModal");
-const modalText = document.getElementById("modalText");
-const confirmBtn = document.getElementById("confirmVote");
-const cancelBtn = document.getElementById("cancelVote");
+  let selectedCandidate = null;
+  let votes = JSON.parse(localStorage.getItem("votes")) || {};
 
-// Render candidates
-function renderCandidates() {
-  candidatesList.innerHTML = "";
-  candidates.forEach(c => {
-    const card = document.createElement("div");
-    card.className = "candidate-card";
-    card.innerHTML = `
-      <h3>${c.name}</h3>
-      <button class="vote-btn" onclick="openVoteModal(${c.id})">Vote</button>
-    `;
-    candidatesList.appendChild(card);
-  });
-}
-
-// Render results
-function renderResults() {
-  results.innerHTML = "";
-  let total = 0;
-  candidates.forEach(c => {
-    total += c.votes;
-    const item = document.createElement("div");
-    item.className = "result-item";
-    item.textContent = `${c.name}: ${c.votes} votes`;
-    results.appendChild(item);
-  });
-  totalVotesSpan.textContent = total;
-}
-
-// Open modal
-function openVoteModal(id) {
-  selectedCandidate = candidates.find(c => c.id === id);
-  modalText.textContent = `Are you sure you want to vote for ${selectedCandidate.name}?`;
-  modal.style.display = "flex";
-}
-
-// Confirm / Cancel Vote
-confirmBtn.onclick = () => {
-  if (selectedCandidate) {
-    selectedCandidate.votes++;
-    saveData();
-    renderResults();
+  function renderCandidates() {
+    candidatesList.innerHTML = "";
+    candidates.forEach(name => {
+      const btn = document.createElement("button");
+      btn.textContent = `Vote for ${name}`;
+      btn.className = "btn-primary";
+      btn.onclick = () => {
+        selectedCandidate = name;
+        modalText.textContent = `Are you sure you want to vote for ${name}?`;
+        modal.style.display = "flex";
+      };
+      candidatesList.appendChild(btn);
+    });
   }
-  modal.style.display = "none";
-};
 
-cancelBtn.onclick = () => {
-  modal.style.display = "none";
-};
-
-// Save data
-function saveData() {
-  localStorage.setItem("candidates", JSON.stringify(candidates));
-}
-
-// Load data
-function loadData() {
-  const saved = localStorage.getItem("candidates");
-  if (saved) {
-    const arr = JSON.parse(saved);
-    arr.forEach((c, i) => candidates[i].votes = c.votes);
+  function renderResults() {
+    resultsDiv.innerHTML = "";
+    let total = 0;
+    candidates.forEach(name => {
+      const count = votes[name] || 0;
+      total += count;
+      const p = document.createElement("p");
+      p.textContent = `${name}: ${count} votes`;
+      resultsDiv.appendChild(p);
+    });
+    totalVotesSpan.textContent = total;
   }
-}
 
-// Clear votes
-document.getElementById("clear-votes").addEventListener("click", () => {
-  candidates.forEach(c => c.votes = 0);
-  saveData();
+  confirmVoteBtn.addEventListener("click", () => {
+    if (selectedCandidate) {
+      votes[selectedCandidate] = (votes[selectedCandidate] || 0) + 1;
+      localStorage.setItem("votes", JSON.stringify(votes));
+      renderResults();
+      modal.style.display = "none";
+    }
+  });
+
+  cancelVoteBtn.addEventListener("click", () => {
+    modal.style.display = "none";
+  });
+
+  document.getElementById("logoutBtn").addEventListener("click", () => {
+    localStorage.removeItem("loggedIn");
+    window.location.href = "index.html";
+  });
+
+  renderCandidates();
   renderResults();
 });
-
-// Export
-document.getElementById("export-data").addEventListener("click", () => {
-  const blob = new Blob([JSON.stringify(candidates)], { type: "application/json" });
-  const link = document.createElement("a");
-  link.href = URL.createObjectURL(blob);
-  link.download = "votes.json";
-  link.click();
-});
-
-// Import
-document.getElementById("import-data").addEventListener("click", () => {
-  document.getElementById("import-file").click();
-});
-
-document.getElementById("import-file").addEventListener("change", e => {
-  const file = e.target.files[0];
-  const reader = new FileReader();
-  reader.onload = () => {
-    const arr = JSON.parse(reader.result);
-    arr.forEach((c, i) => candidates[i].votes = c.votes);
-    saveData();
-    renderResults();
-  };
-  reader.readAsText(file);
-});
-
-// Init
-loadData();
-renderCandidates();
-renderResults();
 
