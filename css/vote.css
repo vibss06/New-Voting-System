@@ -3,27 +3,12 @@ body.vote-page {
   margin: 0;
   min-height: 100vh;
   font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-  background: url('jdcollege.jpg') no-repeat center/cover fixed;
-  position: relative;
+  background: #f9fafb; /* plain light background */
   color: #111827;
-}
-
-/* Dark overlay on background */
-.vote-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.45);
-}
-
-/* Wrapper to center content */
-.vote-wrapper {
-  position: relative;
-  z-index: 1;
-  min-height: 100vh;
-  padding: 40px 20px;
   display: flex;
   justify-content: center;
   align-items: flex-start;
+  padding: 40px 20px;
 }
 
 /* Layout Grid */
@@ -32,22 +17,21 @@ body.vote-page {
   grid-template-columns: 2fr 1fr;
   gap: 28px;
   width: 100%;
-  max-width: 1200px;
+  max-width: 1100px;
 }
 
-/* Glassy Cards */
+/* Card style */
 .vote-card {
-  background: rgba(255, 255, 255, 0.9);
-  backdrop-filter: blur(10px);
-  border-radius: 18px;
+  background: #ffffff;
+  border-radius: 16px;
   padding: 28px;
-  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.18);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .vote-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 14px 36px rgba(0,0,0,0.25);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(0,0,0,0.12);
 }
 
 .vote-card h2, 
@@ -86,18 +70,19 @@ body.vote-page {
 }
 
 .vote-btn-ghost {
-  background: rgba(243,244,246,0.8);
+  background: #f3f4f6;
   color: #374151;
 }
 
 .vote-btn-ghost:hover {
-  background: rgba(229,231,235,0.9);
+  background: #e5e7eb;
 }
 
 /* Results section */
 .results {
   font-size: 16px;
   margin-bottom: 12px;
+  font-weight: 500;
 }
 
 .results-bar {
