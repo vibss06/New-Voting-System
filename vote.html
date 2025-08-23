@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Online Voting</title>
-  <link rel="stylesheet" href="vote.css">
+  <link rel="stylesheet" href="css/vote.css">
 </head>
 <body>
   <div class="container">
@@ -14,37 +14,20 @@
     <div class="content">
       <div class="voting-section">
         <h2>Cast your vote</h2>
-
-        <div class="candidate-card">
-          <h3>Vibhanshu</h3>
-          <p>2nd year Student of DS-A-39</p>
-          <button class="vote-btn" data-candidate="Vibhanshu">Vote for Vibhanshu</button>
-        </div>
-
-        <div class="candidate-card">
-          <h3>Sharayu</h3>
-          <p>2nd year Student of DS-A-38</p>
-          <button class="vote-btn" data-candidate="Sharayu">Vote for Sharayu</button>
-        </div>
-
-        <div class="candidate-card">
-          <h3>XYZ</h3>
-          <p>Not a group member</p>
-          <button class="vote-btn" data-candidate="XYZ">Vote for XYZ</button>
-        </div>
+        <div id="candidates-list"></div>
 
         <div class="actions">
-          <button onclick="clearVotes()">Clear votes (local)</button>
-          <button onclick="exportData()">Export data</button>
-          <button onclick="importData()">Import data</button>
+          <button id="clear-votes">Clear votes</button>
+          <button id="export-data">Export data</button>
+          <button id="import-data">Import data</button>
+          <input type="file" id="import-file" style="display:none" accept="application/json">
         </div>
       </div>
 
       <div class="results-section">
         <h2>Results</h2>
-        <ul id="results"></ul>
-        <p id="totalVotes">Total votes: 0</p>
-        <p><small>Votes are stored locally in your browser.</small></p>
+        <div id="results"></div>
+        <p>Total votes: <span id="total-votes">0</span></p>
       </div>
     </div>
   </div>
@@ -52,104 +35,15 @@
   <!-- Popup Modal -->
   <div id="voteModal" class="modal">
     <div class="modal-content">
-      <h2 id="modalText">Confirm your vote</h2>
-      <div class="modal-buttons">
-        <button id="confirmVote" class="modal-btn modal-confirm">Yes, Vote</button>
-        <button id="cancelVote" class="modal-btn modal-cancel">Cancel</button>
+      <p id="modalText"></p>
+      <div class="modal-actions">
+        <button id="confirmVote">Confirm</button>
+        <button id="cancelVote">Cancel</button>
       </div>
     </div>
   </div>
 
-  <script>
-    let votes = JSON.parse(localStorage.getItem("votes")) || {Vibhanshu:0, Sharayu:0, XYZ:0};
-
-    function updateResults() {
-      const results = document.getElementById("results");
-      results.innerHTML = `
-        <li>Vibhanshu: ${votes.Vibhanshu} votes</li>
-        <li>Sharayu: ${votes.Sharayu} votes</li>
-        <li>XYZ: ${votes.XYZ} votes</li>
-      `;
-      const total = votes.Vibhanshu + votes.Sharayu + votes.XYZ;
-      document.getElementById("totalVotes").textContent = "Total votes: " + total;
-    }
-
-    function castVote(candidate) {
-      votes[candidate]++;
-      localStorage.setItem("votes", JSON.stringify(votes));
-      updateResults();
-    }
-
-    function clearVotes() {
-      votes = {Vibhanshu:0, Sharayu:0, XYZ:0};
-      localStorage.setItem("votes", JSON.stringify(votes));
-      updateResults();
-    }
-
-    function exportData() {
-      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(votes));
-      const downloadAnchor = document.createElement("a");
-      downloadAnchor.setAttribute("href", dataStr);
-      downloadAnchor.setAttribute("download", "votes.json");
-      downloadAnchor.click();
-    }
-
-    function importData() {
-      const input = document.createElement("input");
-      input.type = "file";
-      input.accept = "application/json";
-      input.onchange = e => {
-        const file = e.target.files[0];
-        const reader = new FileReader();
-        reader.onload = event => {
-          votes = JSON.parse(event.target.result);
-          localStorage.setItem("votes", JSON.stringify(votes));
-          updateResults();
-        };
-        reader.readAsText(file);
-      };
-      input.click();
-    }
-
-    // --- Popup Logic ---
-    document.addEventListener("DOMContentLoaded", () => {
-      const modal = document.getElementById("voteModal");
-      const modalText = document.getElementById("modalText");
-      const confirmBtn = document.getElementById("confirmVote");
-      const cancelBtn = document.getElementById("cancelVote");
-
-      let selectedCandidate = null;
-
-      document.querySelectorAll(".vote-btn").forEach(button => {
-        button.addEventListener("click", function() {
-          selectedCandidate = this.dataset.candidate;
-          modalText.textContent = `Are you sure you want to vote for ${selectedCandidate}?`;
-          modal.style.display = "flex";
-        });
-      });
-
-      confirmBtn.addEventListener("click", () => {
-        if (selectedCandidate) {
-          castVote(selectedCandidate);
-        }
-        modal.style.display = "none";
-        selectedCandidate = null;
-      });
-
-      cancelBtn.addEventListener("click", () => {
-        modal.style.display = "none";
-        selectedCandidate = null;
-      });
-
-      window.addEventListener("click", (e) => {
-        if (e.target === modal) {
-          modal.style.display = "none";
-        }
-      });
-
-      updateResults();
-    });
-  </script>
+  <script src="js/script.js"></script>
 </body>
 </html>
 
