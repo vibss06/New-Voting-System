@@ -1,49 +1,51 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Online Voting</title>
   <link rel="stylesheet" href="css/vote.css">
+  <script>
+    if (localStorage.getItem('loggedIn') !== 'true') {
+      window.location.href = 'index.html';
+    }
+  </script>
 </head>
 <body>
-  <div class="container">
+  <header>
     <h1>Online Voting</h1>
-    <p>Cast your vote and view results instantly.</p>
+    <button id="logoutBtn" class="btn-logout">Logout</button>
+  </header>
 
-    <div class="content">
-      <div class="voting-section">
+  <main class="wrap">
+    <div class="grid">
+      <!-- Voting Area -->
+      <section class="card" id="voting-area">
         <h2>Cast your vote</h2>
         <div id="candidates-list"></div>
+      </section>
 
-        <div class="actions">
-          <button id="clear-votes">Clear votes</button>
-          <button id="export-data">Export data</button>
-          <button id="import-data">Import data</button>
-          <input type="file" id="import-file" style="display:none" accept="application/json">
-        </div>
-      </div>
-
-      <div class="results-section">
-        <h2>Results</h2>
-        <div id="results"></div>
-        <p>Total votes: <span id="total-votes">0</span></p>
-      </div>
+      <!-- Results Area -->
+      <aside class="card">
+        <h3>Results</h3>
+        <div id="results" class="results" aria-live="polite"></div>
+        <div class="small">Total votes: <span id="total-votes">0</span></div>
+        <footer class="small">Votes are stored locally in your browser.</footer>
+      </aside>
     </div>
-  </div>
+  </main>
 
-  <!-- Popup Modal -->
+  <!-- Confirmation Popup -->
   <div id="voteModal" class="modal">
     <div class="modal-content">
-      <p id="modalText"></p>
-      <div class="modal-actions">
-        <button id="confirmVote">Confirm</button>
-        <button id="cancelVote">Cancel</button>
-      </div>
+      <p id="modalText">Confirm your vote?</p>
+      <button id="confirmVote" class="btn-primary">Confirm</button>
+      <button id="cancelVote" class="btn-secondary">Cancel</button>
     </div>
   </div>
 
-  <script src="js/script.js"></script>
+  <script src="js/vote.js"></script>
 </body>
 </html>
+
 
