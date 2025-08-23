@@ -5,6 +5,12 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Online Voting</title>
   <link rel="stylesheet" href="styles.css">
+  <script>
+  if (localStorage.getItem('loggedIn') !== 'true') {
+    window.location.href = 'index.html'; // kick out if not logged in
+  }
+</script>
+
 </head>
 <body>
   <main class="wrap">
