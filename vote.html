@@ -1,65 +1,36 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Online Voting</title>
-  <link rel="stylesheet" href="css/vote.css">
+<body class="vote-page">
+  <div class="vote-overlay"></div>
 
-  <!-- 🔒 Redirect if not logged in -->
-  <script>
-    if (localStorage.getItem('loggedIn') !== 'true') {
-      window.location.href = 'index.html'; // go back to login
-    }
-  </script>
-</head>
-<body>
-  <!-- 🔴 Logout button (top right) -->
-  <button class="logout-btn" id="logoutBtn">Logout</button>
+  <button id="logout">Logout</button>
 
-  <main class="wrap">
-    <header>
-      <div class="brand">
-        <h1>Online Voting</h1>
-        <p class="lead">Cast your vote and view results instantly.</p>
-      </div>
-    </header>
-
-    <div class="grid">
-      <!-- Voting Area -->
-      <section class="card" id="voting-area">
-        <h2>Cast your vote</h2>
-        <div id="candidates-list"></div>
-
-        <div class="btn-row">
-          <button id="clear-votes" class="btn btn-ghost">Clear votes (local)</button>
-          <button id="export-data" class="btn btn-ghost">Export data</button>
-          <button id="import-data" class="btn btn-ghost">Import data</button>
-          <input id="import-file" type="file" accept="application/json" style="display:none" />
+  <div class="vote-wrapper">
+    <div class="vote-grid">
+      
+      <!-- Left card (Voting Area) -->
+      <div class="vote-card">
+        <h2>Cast Your Vote</h2>
+        <p>Select your candidate:</p>
+        <div class="vote-btn-row">
+          <button class="vote-btn vote-btn-primary">Candidate A</button>
+          <button class="vote-btn vote-btn-primary">Candidate B</button>
+          <button class="vote-btn vote-btn-primary">Candidate C</button>
         </div>
-      </section>
+      </div>
 
-      <!-- Results Area -->
-      <aside class="card">
-        <h3>Results</h3>
-        <div id="results" class="results" aria-live="polite"></div>
-        <div class="small">Total votes: <span id="total-votes">0</span></div>
-        <footer class="small">Votes are stored locally in your browser.</footer>
-      </aside>
+      <!-- Right card (Results) -->
+      <div class="vote-card">
+        <h3>Live Results</h3>
+        <div class="results">Candidate A</div>
+        <div class="results-bar"><div class="results-bar-fill" style="width:60%"></div></div>
+
+        <div class="results">Candidate B</div>
+        <div class="results-bar"><div class="results-bar-fill" style="width:30%"></div></div>
+
+        <div class="results">Candidate C</div>
+        <div class="results-bar"><div class="results-bar-fill" style="width:10%"></div></div>
+      </div>
+
     </div>
-  </main>
-
-  <!-- 🔴 Logout script -->
-  <script>
-    document.getElementById('logoutBtn').addEventListener('click', function () {
-      localStorage.removeItem('loggedIn');  // clear login flag
-      window.location.href = 'index.html';  // back to login
-    });
-  </script>
-
-  <!-- ✅ Your existing JS -->
-  <script src="script.js"></script>
+  </div>
 </body>
-</html>
-
 
