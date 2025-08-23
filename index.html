@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login | Voting System</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="login-page">
+  <div class="login-overlay"></div>
+
+  <main class="login-wrapper">
+    <section class="login-card">
+      <h1>Online Voting</h1>
+      <p class="muted">Please log in to continue</p>
+
+      <form id="loginForm">
+        <div class="field">
+          <input id="username" type="text" placeholder="Username" autocomplete="username" required />
+        </div>
+        <div class="field">
+          <input id="password" type="password" placeholder="Password" autocomplete="current-password" required />
+        </div>
+        <button type="submit" class="btn-primary">Login</button>
+      </form>
+
+      <p id="loginError" class="error-text" style="display:none;">Invalid credentials</p>
+    </section>
+  </main>
+
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const u = document.getElementById('username').value.trim();
+      const p = document.getElementById('password').value.trim();
+
+      // ✅ Change logic if you want fixed credentials
+      if (u && p) {
+        localStorage.setItem('loggedIn', 'true');   // set login flag
+        window.location.href = 'vote.html';         // redirect to voting page
+      } else {
+        const err = document.getElementById('loginError');
+        err.textContent = 'Please enter username and password';
+        err.style.display = 'block';
+      }
+    });
+  </script>
+</body>
+</html>
