@@ -7,22 +7,32 @@
   <link rel="stylesheet" href="css/vote.css">
   <script>
     if (localStorage.getItem('loggedIn') !== 'true') {
-      window.location.href = 'index.html';
+      window.location.href = 'index.html'; 
     }
   </script>
 </head>
 <body>
-  <header>
-    <h1>Online Voting</h1>
-    <button id="logoutBtn" class="btn-logout">Logout</button>
-  </header>
-
   <main class="wrap">
+    <header>
+      <div class="brand">
+        <h1>Online Voting</h1>
+        <p class="lead">Cast your vote and view results instantly.</p>
+      </div>
+      <button id="logoutBtn" class="btn btn-danger">Logout</button>
+    </header>
+
     <div class="grid">
       <!-- Voting Area -->
       <section class="card" id="voting-area">
         <h2>Cast your vote</h2>
         <div id="candidates-list"></div>
+
+        <div class="btn-row">
+          <button id="clear-votes" class="btn btn-ghost">Clear votes (local)</button>
+          <button id="export-data" class="btn btn-ghost">Export data</button>
+          <button id="import-data" class="btn btn-ghost">Import data</button>
+          <input id="import-file" type="file" accept="application/json" style="display:none" />
+        </div>
       </section>
 
       <!-- Results Area -->
@@ -35,18 +45,10 @@
     </div>
   </main>
 
-  <!-- Confirmation Popup -->
-  <div id="voteModal" class="modal">
-    <div class="modal-content">
-      <p id="modalText">Confirm your vote?</p>
-      <button id="confirmVote" class="btn-primary">Confirm</button>
-      <button id="cancelVote" class="btn-secondary">Cancel</button>
-    </div>
-  </div>
-
   <script src="js/vote.js"></script>
 </body>
 </html>
+
 
 
 
