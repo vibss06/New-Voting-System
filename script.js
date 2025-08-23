@@ -1,85 +1,117 @@
-// === Candidate List ===
-// Edit this list to update names & descriptions.
-// When you push changes to GitHub, your site updates automatically.
-
 const candidates = [
-    { id: 1, name: "Vibhanshu", desc: "2nd year Student of DS-A-39" },
-    { id: 2, name: "Sharayu", desc: "2nd year Student of DS-A-38" },
-    { id: 3, name: "XYZ", desc: "Not a group member" }
+  { id: 1, name: "Candidate A", votes: 0 },
+  { id: 2, name: "Candidate B", votes: 0 },
+  { id: 3, name: "Candidate C", votes: 0 }
 ];
 
-// === Voting Logic ===
-let votes = JSON.parse(localStorage.getItem('votes')) || {};
+let selectedCandidate = null;
 
-function saveVotes() {
-    localStorage.setItem('votes', JSON.stringify(votes));
-    renderResults();
-}
+const candidatesList = document.getElementById("candidates-list");
+const results = document.getElementById("results");
+const totalVotesSpan = document.getElementById("total-votes");
+const modal = document.getElementById("voteModal");
+const modalText = document.getElementById("modalText");
+const confirmBtn = document.getElementById("confirmVote");
+const cancelBtn = document.getElementById("cancelVote");
 
-function vote(candidateId) {
-    votes[candidateId] = (votes[candidateId] || 0) + 1;
-    saveVotes();
-}
-
+// Render candidates
 function renderCandidates() {
-    const list = document.getElementById('candidates-list');
-    list.innerHTML = '';
-    candidates.forEach(c => {
-        const card = document.createElement('div');
-        card.className = 'candidate-card';
-        card.innerHTML = `
-            <div class="candidate-name">${c.name}</div>
-            <div class="candidate-desc">${c.desc}</div>
-            <button class="btn" onclick="vote(${c.id})">Vote for ${c.name}</button>
-        `;
-        list.appendChild(card);
-    });
+  candidatesList.innerHTML = "";
+  candidates.forEach(c => {
+    const card = document.createElement("div");
+    card.className = "candidate-card";
+    card.innerHTML = `
+      <h3>${c.name}</h3>
+      <button class="vote-btn" onclick="openVoteModal(${c.id})">Vote</button>
+    `;
+    candidatesList.appendChild(card);
+  });
 }
 
+// Render results
 function renderResults() {
-    const resultsDiv = document.getElementById('results');
-    let total = 0;
-    resultsDiv.innerHTML = candidates.map(c => {
-        const count = votes[c.id] || 0;
-        total += count;
-        return `<div>${c.name}: ${count} votes</div>`;
-    }).join('');
-    document.getElementById('total-votes').textContent = total;
+  results.innerHTML = "";
+  let total = 0;
+  candidates.forEach(c => {
+    total += c.votes;
+    const item = document.createElement("div");
+    item.className = "result-item";
+    item.textContent = `${c.name}: ${c.votes} votes`;
+    results.appendChild(item);
+  });
+  totalVotesSpan.textContent = total;
 }
 
-// === Export / Import / Clear ===
-document.getElementById('clear-votes').onclick = () => {
-    votes = {};
-    saveVotes();
+// Open modal
+function openVoteModal(id) {
+  selectedCandidate = candidates.find(c => c.id === id);
+  modalText.textContent = `Are you sure you want to vote for ${selectedCandidate.name}?`;
+  modal.style.display = "flex";
+}
+
+// Confirm / Cancel Vote
+confirmBtn.onclick = () => {
+  if (selectedCandidate) {
+    selectedCandidate.votes++;
+    saveData();
+    renderResults();
+  }
+  modal.style.display = "none";
 };
 
-document.getElementById('export-data').onclick = () => {
-    const data = JSON.stringify(votes, null, 2);
-    const blob = new Blob([data], {type: 'application/json'});
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'votes.json';
-    a.click();
+cancelBtn.onclick = () => {
+  modal.style.display = "none";
 };
 
-document.getElementById('import-data').onclick = () => {
-    document.getElementById('import-file').click();
-};
+// Save data
+function saveData() {
+  localStorage.setItem("candidates", JSON.stringify(candidates));
+}
 
-document.getElementById('import-file').onchange = e => {
-    const file = e.target.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = () => {
-        votes = JSON.parse(reader.result);
-        saveVotes();
-    };
-    reader.readAsText(file);
-};
+// Load data
+function loadData() {
+  const saved = localStorage.getItem("candidates");
+  if (saved) {
+    const arr = JSON.parse(saved);
+    arr.forEach((c, i) => candidates[i].votes = c.votes);
+  }
+}
 
-// === Init ===
+// Clear votes
+document.getElementById("clear-votes").addEventListener("click", () => {
+  candidates.forEach(c => c.votes = 0);
+  saveData();
+  renderResults();
+});
+
+// Export
+document.getElementById("export-data").addEventListener("click", () => {
+  const blob = new Blob([JSON.stringify(candidates)], { type: "application/json" });
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = "votes.json";
+  link.click();
+});
+
+// Import
+document.getElementById("import-data").addEventListener("click", () => {
+  document.getElementById("import-file").click();
+});
+
+document.getElementById("import-file").addEventListener("change", e => {
+  const file = e.target.files[0];
+  const reader = new FileReader();
+  reader.onload = () => {
+    const arr = JSON.parse(reader.result);
+    arr.forEach((c, i) => candidates[i].votes = c.votes);
+    saveData();
+    renderResults();
+  };
+  reader.readAsText(file);
+});
+
+// Init
+loadData();
 renderCandidates();
 renderResults();
-
 
