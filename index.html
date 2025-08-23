@@ -34,10 +34,9 @@
       const u = document.getElementById('username').value.trim();
       const p = document.getElementById('password').value.trim();
 
-      // ✅ Change logic if you want fixed credentials
       if (u && p) {
-        localStorage.setItem('loggedIn', 'true');   // set login flag
-        window.location.href = 'vote.html';         // redirect to voting page
+        localStorage.setItem('loggedIn', 'true');   // login flag
+        window.location.href = 'vote.html';         // redirect
       } else {
         const err = document.getElementById('loginError');
         err.textContent = 'Please enter username and password';
@@ -47,3 +46,4 @@
   </script>
 </body>
 </html>
+
