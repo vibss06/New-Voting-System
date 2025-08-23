@@ -2,59 +2,54 @@
 body.login-page {
   margin: 0;
   min-height: 100vh;
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-  background: url('../images/jdcollege.jpg') no-repeat center/cover fixed;
-  position: relative;
+  font-family: "Segoe UI", Roboto, Arial, sans-serif;
+  background: linear-gradient(135deg, #2563eb, #1e40af);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
+/* overlay for depth */
 .login-overlay {
-  position: fixed;
+  position: absolute;
   inset: 0;
-  background: rgba(0,0,0,0.35);
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(4px);
 }
 
 .login-wrapper {
   position: relative;
   z-index: 1;
-  display: grid;
-  place-items: center;
-  min-height: 100vh;
-  padding: 24px;
+  width: 100%;
+  max-width: 420px;
+  padding: 20px;
 }
 
 .login-card {
   width: 100%;
-  max-width: 400px;
-  padding: 36px 32px;
-  border-radius: 18px;
-  background: rgba(255,255,255,0.92);
-  backdrop-filter: blur(10px);
-  box-shadow: 0 10px 28px rgba(0,0,0,0.18);
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 16px;
+  padding: 40px 32px;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.18);
   text-align: center;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
-
-.login-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 14px 36px rgba(0,0,0,0.25);
+  animation: fadeIn 0.6s ease;
 }
 
 .login-card h1 {
   margin: 0 0 8px;
   font-size: 28px;
-  font-weight: 600;
+  font-weight: 700;
   color: #1f2937;
 }
 
 .muted {
   margin: 0 0 22px;
   font-size: 15px;
-  color: #4b5563;
+  color: #6b7280;
 }
 
 .field {
   margin-bottom: 16px;
-  text-align: left;
 }
 
 .field input {
@@ -64,12 +59,12 @@ body.login-page {
   border-radius: 12px;
   font-size: 15px;
   outline: none;
-  transition: all 0.2s ease;
+  transition: all 0.25s ease;
 }
 
 .field input:focus {
   border-color: #2563eb;
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
 }
 
 .btn-primary {
@@ -78,22 +73,28 @@ body.login-page {
   border: none;
   border-radius: 12px;
   font-size: 16px;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
-  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  background: linear-gradient(135deg, #2563eb, #1e40af);
   color: #fff;
-  transition: background 0.3s ease, transform 0.2s ease;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .btn-primary:hover {
-  background: linear-gradient(135deg, #1d4ed8, #1e40af);
-  transform: translateY(-2px);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4);
 }
 
 .error-text {
-  margin-top: 12px;
+  margin-top: 14px;
   font-size: 14px;
   color: #b91c1c;
   font-weight: 500;
 }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 
